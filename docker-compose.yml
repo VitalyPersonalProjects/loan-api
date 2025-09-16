@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    image: php:8.2-fpm
+    container_name: loan_api_app
+    working_dir: /var/www/html
+    volumes:
+      - ./app:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - loan-net
+
+  web:
+    image: nginx:latest
+    container_name: loan_api_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - loan-net
+
+  db:
+    image: postgres:15
+    container_name: loan_api_db
+    environment:
+      POSTGRES_DB: loans
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    networks:
+      - loan-net
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+networks:
+  loan-net:
+
+volumes:
+  db_data:
