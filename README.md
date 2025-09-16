@@ -61,7 +61,7 @@ API для подачи и обработки заявок на займ.
 1. Склонировать репозиторий:
 
 ```bash
-git clone https://github.com/<username>/loan-api.git
+git clone https://github.com/VitalyPersonalProjects/loan-api.git
 cd loan-api
 ```
 
